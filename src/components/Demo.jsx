@@ -1,5 +1,7 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import { copy, linkIcon, loader, tick } from "../assets";
+import { useLazyGetSummaryQuery } from "../services/article";
 
 const Demo = () => {
   const [ article, setArticle] = useState({
@@ -7,8 +9,20 @@ const Demo = () => {
     summary:'',
   });
 
+  const [ getSummary,  { error, isFetching }] = useLazyGetSummaryQuery();
+
+  const [ allArticles,  setAllArticles ] = useState([]);
+
   const handleSubmit = async(e) => {
-    alert('Submitted');
+    e.presentDefault();
+    const { data } = await getSummary ({ articleUrl: article.url });
+
+    if (data?.summary) {
+      const newArticle = { ...article,summary: data.summary };
+      setArticle(newArticle);
+
+      console.log(newArticle);
+    }
   }
   return (
     <section className="mt-16 w-full max-w-xl">
