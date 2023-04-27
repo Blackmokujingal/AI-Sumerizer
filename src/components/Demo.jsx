@@ -13,7 +13,6 @@ const Demo = () => {
 
   // RTK lazy query
   const [getSummary, { error, isFetching }] = useLazyGetSummaryQuery();
-
   // Load data from localStorage on mount
   useEffect(() => {
     const articlesFromLocalStorage = JSON.parse(
@@ -29,7 +28,7 @@ const Demo = () => {
     e.preventDefault();
 
     const existingArticle = allArticles.find(
-      (item) => item.url === article.url
+      (item) => item.url === article.url 
     );
 
     if (existingArticle) return setArticle(existingArticle);
